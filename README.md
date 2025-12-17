@@ -1,16 +1,29 @@
-# 🎮 Bot RPG para Discord
+# 🎮 **Hexfall - Bot RPG para Discord**
 
-Un bot de Discord completo centrado en juegos de rol (RPG) con sistema de combate, personajes, inventario, tienda, misiones y mazmorras.
+Un bot de Discord **completamente funcional** centrado en juegos de rol (RPG) con sistema de combate, personajes, inventario, tienda, misiones, mazmorras, **PvP multijugador**, **mercado dinámico** y **sistema de logros**.
 
-## 🌟 Características
+## 🌟 Características Principales
 
-### 👤 Sistema de Personajes
-- **4 Clases jugables**: Guerrero, Mago, Arquero y Clérigo
+### 🎭 **8 Clases Jugables**
+
+#### Clases Originales
+- **⚔️ Guerrero** - Fuerte y resistente (HP: 120, ATK: 18, DEF: 12)
+- **🔮 Mago** - Maestro de la magia (HP: 85, ATK: 20, DEF: 8, Maná: 100)
+- **🏹 Arquero** - Rápido y preciso (HP: 95, ATK: 19, DEF: 7, SPD: 14)
+- **✨ Clérigo** - Sanador del grupo (HP: 100, ATK: 16, DEF: 10, Maná: 80)
+
+#### Nuevas Clases Míticas ⭐
+- **🗡️ Asesino** - Críticos letales (SPD: 16, crítico: 70%)
+- **🛡️ Paladín** - Defensor sagrado (DEF: 14, balance perfecto)
+- **🔥 Berserker** - Furia salvaje (ATK: 24, riesgo/recompensa)
+- **❄️ Nigromante** - Artes oscuras (Maná: 110, debuffs poderosos)
+
+### 👤 Sistema de Personajes Avanzado
 - **Habilidades únicas por clase** - 3 habilidades especiales para cada rol
-- Sistema de niveles y experiencia
-- Estadísticas: HP, ATK, DEF, SPD, **Maná**
-- **Sistema de reputación** - Tus decisiones afectan tu reputación
+- Sistema de niveles y experiencia escalable (100+ niveles)
+- Estadísticas dinámicas: HP, ATK, DEF, SPD, Maná
 - Progresión de personaje con aumento de stats por nivel
+- Sistema de reputación basado en decisiones
 
 ### ⚔️ Sistema de Combate Interactivo
 - **Combate por turnos donde TÚ decides cada acción**
@@ -33,6 +46,48 @@ Un bot de Discord completo centrado en juegos de rol (RPG) con sistema de combat
 - Equipamiento: Armas, armaduras y accesorios
 - Items consumibles (pociones)
 - Sistema de equipar/desequipar con aplicación de stats
+
+### ⚔️ **Sistema de PvP Multijugador** ⭐ NUEVO
+- **Duelos 1v1 entre jugadores** - Sistema de best of 3 rondas
+- **Sistema de apuestas** - Apuesta oro para ganar más oro
+- **Ranking global PvP** - Compite por ser el mejor
+- **Racha de victorias** - Consigue rachas de victorias consecutivas
+- **Historial de combates** - Revisa tus últimos 20 duelos
+- **Win Rate dinámico** - Estadísticas completas de PvP
+
+### 💰 **Mercado de Jugadores** ⭐ NUEVO
+- **Venta y compra entre jugadores** - Crea un economia viva
+- **Sistema de listings** - Anuncia items a la venta
+- **Búsqueda de items** - Encuentra lo que necesitas
+- **Comisión del mercado (5%)** - Dinámica económica
+- **Historial de transacciones** - Sigue las compras/ventas
+- **Estadísticas del mercado** - Analiza tendencias de precios
+- **Precio dinámico** - Los precios dependen de la oferta y demanda
+
+### 🏆 **Sistema de Logros** ⭐ NUEVO
+- **30+ Logros desbloqueables** - Objetivos para todos
+- **6 Categorías**: Combate, PvP, Mazmorras, Economía, Progresión, Especiales
+- **Sistema de puntos** - Gana puntos por desbloquear logros
+- **Progreso visible** - Ve qué falta para desbloquear cada logro
+- **Insignias especiales** - Muestra tus logros en el perfil
+
+### 🌈 **Sistema de Rarezas (7 Niveles)**
+- **⚪ Común** - Items básicos (0-5 stats)
+- **🟢 Poco Común** - Items mejorados (6-12 stats)
+- **🔵 Especial** - Calidad superior (13-20 stats)
+- **🟣 Épico** - Items poderosos (21-28 stats)
+- **⭐ Legendario** - Mazmorras exclusivas (29-35 stats)
+- **🔮 Mítico** - Eventos especiales (36-42 stats) ⭐
+- **🌟 Celestial** - Supremo (43-50 stats) ⭐
+
+### 📦 **52+ Items Únicos**
+- **9 Consumibles** - Pociones, elixires, tónicos
+- **16 Armas** - Espadas, hachas, arcos, bastones
+- **9 Armaduras** - Petos, mantos, armaduras completas
+- **9 Accesorios** - Anillos, amuletos, brazaletes
+- **Items Legendarios** - Exclusivos de mazmorras
+- **Items Míticos** - Recompensas de eventos
+- **Items Celestiales** - Premios supremos
 
 ### 🏪 Tienda
 - Compra de items con oro
@@ -85,7 +140,59 @@ Un bot de Discord completo centrado en juegos de rol (RPG) con sistema de combat
 - Clasificación por nivel
 - Clasificación por oro
 - Clasificación por victorias
+- **Clasificación PvP** - Top jugadores de duelos
 - **Clasificación de clanes** por nivel y miembros
+
+## 🎮 Comandos Disponibles
+
+### Personaje
+- `/crear` - Crea tu personaje eligiendo una de 8 clases
+- `/perfil` - Ve tus estadísticas, nivel, oro y progreso
+- `/inventario` - Gestiona tus items y equipo
+
+### Combate
+- `/combate` - Lucha contra enemigos escogiendo acciones cada turno
+- `/habilidades` - Ve las habilidades especiales de tu clase
+
+### Mundo
+- `/mazmorra` - Explora mazmorras cooperativas (solo o con amigos)
+- `/tienda` - Compra items únicos de la tienda
+- `/eventos` - Participa en eventos aleatorios
+- `/misiones` - Completa misiones para obtener recompensas
+
+### Economía
+- `/mercado` - Sistema de compra/venta entre jugadores
+  - `/mercado listar` - Vende items
+  - `/mercado ver` - Busca items
+  - `/mercado comprar` - Compra items
+  - `/mercado historial` - Ve transacciones
+
+### PvP
+- `/pvp desafiar` - Desafía a otro jugador a duelo
+- `/pvp estadisticas` - Ve tu win rate y récords
+- `/pvp ranking` - Top 10 jugadores de duelos
+- `/pvp historial` - Tu historial de combates
+
+### Logros
+- `/logros ver` - Tus logros desbloqueados
+- `/logros todos` - Todos los logros disponibles
+- `/logros estadisticas` - Tu progreso general
+- `/logros info` - Información de un logro específico
+
+### Clanes
+- `/clan crear` - Crea un nuevo clan
+- `/clan unir` - Únete a un clan
+- `/clan anuncio` - Escribe un anuncio para tu clan
+- `/clan ranking` - Ranking de clanes
+- `/clan tesoreria` - Gestiona el oro del clan
+
+### Información
+- `/ayuda` - Sistema de ayuda con 6 categorías
+- `/ranking` - Clasificaciones globales
+- `/usar` - Usa un item de tu inventario
+- `/admin` - Comandos administrativos (solo admins)
+- `/config-servidor` - Configurar modo del servidor
+- `/borrar` - Eliminar un personaje
 
 ## 📦 Instalación
 
@@ -141,6 +248,81 @@ Antes de iniciar el bot por primera vez, registra los comandos:
 ```bash
 node deploy-commands.js
 ```
+
+### Iniciar el bot
+```bash
+# Modo producción
+npm start
+
+# Modo desarrollo con auto-reload
+npm run dev
+```
+
+## 📊 Estadísticas del Proyecto
+
+- **Líneas de código**: 8,500+
+- **Archivos JavaScript**: 28
+- **Sistemas implementados**: 8 principales
+- **Comandos slash**: 19
+- **Items únicos**: 52+
+- **Logros disponibles**: 30+
+- **Clases jugables**: 8
+- **Rarezas de items**: 7 niveles
+- **Versión de Node**: v16.9.0+
+- **Versión de Discord.js**: v14.14.1+
+
+## 🏗️ Estructura del Proyecto
+
+```
+Bot-RPG/
+├── commands/              # 19 comandos slash
+│   ├── admin.js          # Comandos administrativos
+│   ├── ayuda.js          # Sistema de ayuda con categorías
+│   ├── clan.js           # Sistema de clanes
+│   ├── combate.js        # Combate interactivo
+│   ├── crear.js          # Creación de personajes
+│   ├── evento.js         # Eventos aleatorios
+│   ├── habilidades.js    # Árbol de habilidades
+│   ├── inventario.js     # Gestión de inventario
+│   ├── logros.js         # Sistema de logros ⭐
+│   ├── mazmorra.js       # Mazmorras cooperativas
+│   ├── mercado.js        # Mercado de jugadores ⭐
+│   ├── misiones.js       # Sistema de misiones
+│   ├── perfil.js         # Perfil del personaje
+│   ├── pvp.js            # Sistema de PvP ⭐
+│   ├── ranking.js        # Rankings globales
+│   ├── tienda.js         # Tienda de items
+│   ├── usar.js           # Usar items
+│   └── ...
+├── utils/                # 12 utilidades de sistema
+│   ├── playerManager.js      # Gestión de jugadores y clases
+│   ├── gameData.js           # Items y datos del juego
+│   ├── combatSystem.js       # Lógica de combate
+│   ├── clanManager.js        # Gestión de clanes
+│   ├── pvpSystem.js          # Sistema de PvP ⭐
+│   ├── marketSystem.js       # Sistema de mercado ⭐
+│   ├── achievementSystem.js  # Sistema de logros ⭐
+│   ├── coopDungeon.js        # Mazmorras cooperativas
+│   ├── embedBuilder.js       # Constructor de embeds
+│   └── ...
+├── data/                 # Datos persistentes en JSON
+│   ├── players.json      # Jugadores globales
+│   ├── server-config.json
+│   ├── market-listings.json     # Mercado ⭐
+│   ├── market-historial.json    # Historial mercado ⭐
+│   ├── pvp-stats.json          # Estadísticas PvP ⭐
+│   ├── achievements.json       # Logros ⭐
+│   └── servers/
+│       └── [guildId]/   # Datos por servidor
+├── .env                  # Variables de entorno
+├── .env.example         # Plantilla de .env
+├── index.js             # Punto de entrada principal
+├── deploy-commands.js   # Script para registrar comandos
+├── package.json         # Dependencias del proyecto
+└── README.md           # Este archivo
+```
+
+## 🎯 Características Destacadas
 
 ### Iniciar el bot
 ```bash
