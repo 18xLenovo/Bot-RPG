@@ -194,10 +194,11 @@ const COOP_DUNGEONS = {
 };
 
 class CoopDungeonSession {
-    constructor(dungeonKey, leader, interaction) {
+    constructor(dungeonKey, leader, interaction, guildId) {
         this.dungeon = COOP_DUNGEONS[dungeonKey];
         this.dungeonKey = dungeonKey;
         this.leader = leader;
+        this.guildId = guildId;
         this.interaction = interaction;
         this.players = [leader];
         this.playersData = new Map();
@@ -207,7 +208,7 @@ class CoopDungeonSession {
         this.activeBattles = [];
         
         // Cargar datos del líder
-        const leaderPlayer = playerManager.getPlayer(leader);
+        const leaderPlayer = playerManager.getPlayer(leader, guildId);
         this.playersData.set(leader, {
             hp: leaderPlayer.stats.hp,
             maxHp: leaderPlayer.stats.hp,
@@ -230,7 +231,7 @@ class CoopDungeonSession {
             return { success: false, message: 'Ya estás en esta party.' };
         }
 
-        const player = playerManager.getPlayer(userId);
+        const player = playerManager.getPlayer(userId, this.guildId);
         if (!player) {
             return { success: false, message: 'El jugador no tiene un personaje.' };
         }
@@ -295,7 +296,7 @@ class CoopDungeonSession {
             case 'treasure':
                 this.log.push(`💰 +${event.reward.gold} oro para cada miembro!`);
                 this.players.forEach(userId => {
-                    playerManager.addGold(userId, event.reward.gold);
+                    playerManager.addGold(userId, event.reward.gold, this.guildId);
                 });
                 break;
 
@@ -328,7 +329,7 @@ class CoopDungeonSession {
                 if (puzzleSuccess) {
                     this.log.push(`✅ ¡Resolvieron el acertijo! +${event.success.exp} EXP`);
                     this.players.forEach(userId => {
-                        playerManager.addExp(userId, event.success.exp);
+                        playerManager.addExp(userId, event.success.exp, this.guildId);
                     });
                 } else {
                     this.log.push(`❌ Fallaron... Reciben ${event.failure.damage} de daño`);
@@ -351,7 +352,7 @@ class CoopDungeonSession {
 
         // Combate simplificado para el grupo
         const totalPlayerAtk = this.players.reduce((sum, userId) => {
-            const player = playerManager.getPlayer(userId);
+            const player = playerManager.getPlayer(userId, this.guildId);
             return sum + player.stats.atk;
         }, 0);
 
@@ -379,8 +380,8 @@ class CoopDungeonSession {
             this.log.push(`💰 +${goldReward} oro | ⭐ +${expReward} EXP (cada uno)`);
             
             this.players.forEach(userId => {
-                playerManager.addGold(userId, goldReward);
-                playerManager.addExp(userId, expReward);
+                playerManager.addGold(userId, goldReward, this.guildId);
+                playerManager.addExp(userId, expReward, this.guildId);
             });
         }
 
@@ -399,7 +400,7 @@ class CoopDungeonSession {
 
         // Combate épico contra el jefe
         const totalPlayerAtk = this.players.reduce((sum, userId) => {
-            const player = playerManager.getPlayer(userId);
+            const player = playerManager.getPlayer(userId, this.guildId);
             return sum + player.stats.atk;
         }, 0);
 
@@ -462,8 +463,8 @@ class CoopDungeonSession {
 
         // Distribuir recompensas
         this.players.forEach(userId => {
-            playerManager.addGold(userId, rewards.gold);
-            const levelsGained = playerManager.addExp(userId, rewards.exp);
+            playerManager.addGold(userId, rewards.gold, this.guildId);
+            const levelsGained = playerManager.addExp(userId, rewards.exp, this.guildId);
             
             if (levelsGained > 0) {
                 this.log.push(`🆙 <@${userId}> subió ${levelsGained} nivel(es)!`);
@@ -472,7 +473,7 @@ class CoopDungeonSession {
             // Item aleatorio
             if (Math.random() < 0.4 && rewards.items.length > 0) {
                 const item = rewards.items[Math.floor(Math.random() * rewards.items.length)];
-                playerManager.addItem(userId, { ...item });
+                playerManager.addItem(userId, { ...item }, this.guildId);
                 this.log.push(`📦 <@${userId}> obtuvo: **${item.name}**!`);
             }
         });
@@ -505,7 +506,7 @@ class CoopDungeonSession {
         this.log.push(`\nPenalización: -${goldLost} oro (cada uno)`);
         
         this.players.forEach(userId => {
-            playerManager.addGold(userId, -goldLost);
+            playerManager.addGold(userId, -goldLost, this.guildId);
         });
 
         return await this.showFinalResult();
@@ -520,7 +521,7 @@ class CoopDungeonSession {
                 { 
                     name: '👥 Estado del Grupo', 
                     value: this.players.map(id => {
-                        const player = playerManager.getPlayer(id);
+                        const player = playerManager.getPlayer(id, this.guildId);
                         const data = this.playersData.get(id);
                         return `<@${id}>: ❤️ ${data.hp}/${data.maxHp}`;
                     }).join('\n')

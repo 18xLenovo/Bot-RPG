@@ -49,8 +49,8 @@ module.exports = {
         // Modo cooperativo
         if (isCoop) {
             const sessionId = `${interaction.channelId}-${Date.now()}`;
-            const session = new CoopDungeonSession(dungeonId);
-            session.addPlayer(userId, player, interaction.user.username);
+            const session = new CoopDungeonSession(dungeonId, userId, interaction, guildId);
+            session.addPlayer(userId);
             activeSessions.set(sessionId, session);
 
             const joinButton = new ActionRowBuilder()
@@ -135,8 +135,8 @@ module.exports = {
         } else {
             // Modo solitario - crear sesión de 1 jugador
             const sessionId = `${interaction.channelId}-${Date.now()}`;
-            const session = new CoopDungeonSession(dungeonId);
-            session.addPlayer(userId, player, interaction.user.username);
+            const session = new CoopDungeonSession(dungeonId, userId, interaction, guildId);
+            session.addPlayer(userId);
             activeSessions.set(sessionId, session);
 
             await interaction.deferReply();
