@@ -94,7 +94,7 @@ module.exports = {
 
             collector.on('collect', async (i) => {
                 if (i.customId === `join_dungeon_${sessionId}`) {
-                    const joiningPlayer = playerManager.getPlayer(i.user.id);
+                    const joiningPlayer = playerManager.getPlayer(i.user.id, guildId);
                     if (!joiningPlayer) {
                         return i.reply({ content: '❌ No tienes un personaje. Usa `/crear` primero.', ephemeral: true });
                     }

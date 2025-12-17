@@ -11,6 +11,7 @@ const COOP_DUNGEONS = {
         maxPlayers: 4,
         rooms: 5,
         difficulty: 'Fácil',
+        rewardDescription: '100-200 oro, 50-100 EXP, Items raros',
         rewards: {
             gold: 300,
             exp: 200,
@@ -56,6 +57,7 @@ const COOP_DUNGEONS = {
         maxPlayers: 5,
         rooms: 7,
         difficulty: 'Media',
+        rewardDescription: '200-400 oro, 100-200 EXP, Equipamiento especial',
         rewards: {
             gold: 600,
             exp: 400,
@@ -101,6 +103,7 @@ const COOP_DUNGEONS = {
         maxPlayers: 6,
         rooms: 10,
         difficulty: 'Difícil',
+        rewardDescription: '400-800 oro, 200-400 EXP, Artículos legendarios',
         rewards: {
             gold: 1200,
             exp: 800,
@@ -148,6 +151,7 @@ const COOP_DUNGEONS = {
         maxPlayers: 8,
         rooms: 15,
         difficulty: 'Legendaria',
+        rewardDescription: '1000-2000 oro, 500-1000 EXP, Tesoros épicos',
         rewards: {
             gold: 2500,
             exp: 1500,

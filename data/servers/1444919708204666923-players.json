@@ -1,0 +1,84 @@
+{
+  "838993525692432394": {
+    "class": "mago",
+    "level": 1,
+    "exp": 0,
+    "expToNext": 100,
+    "gold": 100,
+    "stats": {
+      "hp": 80,
+      "atk": 20,
+      "def": 6,
+      "spd": 10,
+      "maxMana": 100,
+      "mana": 100
+    },
+    "baseStats": {
+      "hp": 80,
+      "atk": 20,
+      "def": 6,
+      "spd": 10,
+      "maxMana": 100,
+      "mana": 100
+    },
+    "inventory": [
+      {
+        "id": "pocion_vida",
+        "name": "Poción de Vida",
+        "type": "consumible",
+        "effect": "heal",
+        "value": 50,
+        "quantity": 3
+      },
+      {
+        "id": "pocion_mana",
+        "name": "Poción de Maná",
+        "type": "consumible",
+        "effect": "mana",
+        "value": 30,
+        "quantity": 2
+      }
+    ],
+    "equipment": {
+      "weapon": null,
+      "armor": null,
+      "accessory": null
+    },
+    "abilities": [
+      {
+        "id": "bola_fuego",
+        "name": "Bola de Fuego",
+        "description": "Hechizo ígneo (250% ATK)",
+        "manaCost": 25,
+        "damage": 2.5,
+        "element": "fire"
+      },
+      {
+        "id": "rayo_hielo",
+        "name": "Rayo de Hielo",
+        "description": "Congela al enemigo reduciendo su SPD",
+        "manaCost": 30,
+        "damage": 1.8,
+        "debuff": {
+          "spd": 0.5,
+          "duration": 2
+        }
+      },
+      {
+        "id": "tormenta_arcana",
+        "name": "Tormenta Arcana",
+        "description": "Devastador hechizo final (400% ATK)",
+        "manaCost": 50,
+        "damage": 4,
+        "element": "arcane"
+      }
+    ],
+    "completedQuests": [],
+    "currentQuest": null,
+    "wins": 0,
+    "losses": 0,
+    "events": [],
+    "reputation": 0,
+    "createdAt": 1765930115048
+  }
+}
