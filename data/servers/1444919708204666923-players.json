@@ -4,7 +4,7 @@
     "level": 1,
     "exp": 0,
     "expToNext": 100,
-    "gold": 50,
+    "gold": 0,
     "stats": {
       "hp": 80,
       "atk": 20,
