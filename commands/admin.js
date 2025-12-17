@@ -105,7 +105,7 @@ module.exports = {
         }
 
         // Verificar que el servidor esté en modo solo-servidor
-        const config = ServerConfigManager.getConfig(guildId);
+        const config = ServerConfigManager.getServerConfig(guildId);
         if (config.mode !== 'solo-servidor') {
             return interaction.reply({
                 content: '❌ Este comando solo funciona en modo "solo-servidor".',
