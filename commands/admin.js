@@ -1,6 +1,18 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { PlayerManager: playerManager } = require('../utils/playerManager');
 const { ServerConfigManager } = require('../utils/serverConfigManager');
+const { SHOP_ITEMS } = require('../utils/gameData');
+
+// Obtener todos los items disponibles para los choices
+function getAllItemChoices() {
+    const choices = [];
+    for (const category in SHOP_ITEMS) {
+        SHOP_ITEMS[category].forEach(item => {
+            choices.push({ name: `${item.name} (${category})`, value: item.name });
+        });
+    }
+    return choices;
+}
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -41,7 +53,8 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName('nombre')
                         .setDescription('Nombre del item')
-                        .setRequired(true))
+                        .setRequired(true)
+                        .addChoices(...getAllItemChoices().slice(0, 25)))
                 .addIntegerOption(option =>
                     option.setName('cantidad')
                         .setDescription('Cantidad de items')
@@ -69,7 +82,10 @@ module.exports = {
                     option.setName('cantidad')
                         .setDescription('Cantidad a aumentar')
                         .setRequired(true)
-                        .setMinValue(1))),
+                        .setMinValue(1)))
+        .addSubcommand(sub =>
+            sub.setName('listar')
+                .setDescription('Ver lista de items disponibles')),
 
     async execute(interaction, guildId) {
         // Verificar permisos de admin
@@ -191,6 +207,29 @@ module.exports = {
                     .setTimestamp();
 
                 await interaction.reply({ embeds: [embed] });
+            }
+
+            else if (subcommand === 'listar') {
+                const embeds = [];
+                
+                // Crear embeds para cada categoría
+                for (const category in SHOP_ITEMS) {
+                    const items = SHOP_ITEMS[category];
+                    let itemList = '';
+                    
+                    items.forEach(item => {
+                        itemList += `**${item.name}** - ${item.description}\n`;
+                    });
+
+                    const embed = new EmbedBuilder()
+                        .setColor('#00AFF4')
+                        .setTitle(`📦 ${category.charAt(0).toUpperCase() + category.slice(1)}`)
+                        .setDescription(itemList || 'No hay items en esta categoría');
+                    
+                    embeds.push(embed);
+                }
+
+                await interaction.reply({ embeds: embeds });
             }
 
         } catch (error) {
