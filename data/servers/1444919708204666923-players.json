@@ -1,25 +1,25 @@
 {
   "838993525692432394": {
-    "class": "mago",
+    "class": "guerrero",
     "level": 1,
     "exp": 0,
     "expToNext": 100,
-    "gold": 0,
+    "gold": 100,
     "stats": {
-      "hp": 80,
-      "atk": 20,
-      "def": 6,
-      "spd": 10,
-      "maxMana": 100,
-      "mana": 100
+      "hp": 120,
+      "atk": 15,
+      "def": 12,
+      "spd": 8,
+      "maxMana": 50,
+      "mana": 50
     },
     "baseStats": {
-      "hp": 80,
-      "atk": 20,
-      "def": 6,
-      "spd": 10,
-      "maxMana": 100,
-      "mana": 100
+      "hp": 120,
+      "atk": 15,
+      "def": 12,
+      "spd": 8,
+      "maxMana": 50,
+      "mana": 50
     },
     "inventory": [
       {
@@ -46,31 +46,31 @@
     },
     "abilities": [
       {
-        "id": "bola_fuego",
-        "name": "Bola de Fuego",
-        "description": "Hechizo ígneo (250% ATK)",
-        "manaCost": 25,
-        "damage": 2.5,
-        "element": "fire"
+        "id": "golpe_poderoso",
+        "name": "Golpe Poderoso",
+        "description": "Ataque devastador (200% ATK)",
+        "manaCost": 15,
+        "damage": 2,
+        "cooldown": 0
       },
       {
-        "id": "rayo_hielo",
-        "name": "Rayo de Hielo",
-        "description": "Congela al enemigo reduciendo su SPD",
-        "manaCost": 30,
-        "damage": 1.8,
-        "debuff": {
-          "spd": 0.5,
+        "id": "escudo_hierro",
+        "name": "Escudo de Hierro",
+        "description": "Aumenta DEF 50% por 2 turnos",
+        "manaCost": 20,
+        "type": "buff",
+        "effect": {
+          "def": 1.5,
           "duration": 2
         }
       },
       {
-        "id": "tormenta_arcana",
-        "name": "Tormenta Arcana",
-        "description": "Devastador hechizo final (400% ATK)",
-        "manaCost": 50,
-        "damage": 4,
-        "element": "arcane"
+        "id": "furia_guerrera",
+        "name": "Furia Guerrera",
+        "description": "Ataque múltiple (3 golpes al 70% ATK)",
+        "manaCost": 25,
+        "damage": 0.7,
+        "hits": 3
       }
     ],
     "completedQuests": [],
@@ -79,6 +79,6 @@
     "losses": 0,
     "events": [],
     "reputation": 0,
-    "createdAt": 1765930115048
+    "createdAt": 1765932458476
   }
 }

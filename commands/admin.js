@@ -114,7 +114,40 @@ module.exports = {
         }
 
         const subcommand = interaction.options.getSubcommand();
+
+        // Subcomando listar no requiere jugador
+        if (subcommand === 'listar') {
+            const embeds = [];
+            
+            // Crear embeds para cada categoría
+            for (const category in SHOP_ITEMS) {
+                const items = SHOP_ITEMS[category];
+                let itemList = '';
+                
+                items.forEach(item => {
+                    itemList += `**${item.name}** - ${item.description}\n`;
+                });
+
+                const embed = new EmbedBuilder()
+                    .setColor('#00AFF4')
+                    .setTitle(`📦 ${category.charAt(0).toUpperCase() + category.slice(1)}`)
+                    .setDescription(itemList || 'No hay items en esta categoría');
+                
+                embeds.push(embed);
+            }
+
+            return await interaction.reply({ embeds: embeds });
+        }
+
+        // Para otros subcomandos, necesitamos el jugador
         const targetUser = interaction.options.getUser('jugador');
+        if (!targetUser) {
+            return interaction.reply({
+                content: '❌ Debes especificar un jugador.',
+                ephemeral: true
+            });
+        }
+
         const targetId = targetUser.id;
         
         // Verificar que el jugador tenga personaje
@@ -227,29 +260,6 @@ module.exports = {
                     .setTimestamp();
 
                 await interaction.reply({ embeds: [embed] });
-            }
-
-            else if (subcommand === 'listar') {
-                const embeds = [];
-                
-                // Crear embeds para cada categoría
-                for (const category in SHOP_ITEMS) {
-                    const items = SHOP_ITEMS[category];
-                    let itemList = '';
-                    
-                    items.forEach(item => {
-                        itemList += `**${item.name}** - ${item.description}\n`;
-                    });
-
-                    const embed = new EmbedBuilder()
-                        .setColor('#00AFF4')
-                        .setTitle(`📦 ${category.charAt(0).toUpperCase() + category.slice(1)}`)
-                        .setDescription(itemList || 'No hay items en esta categoría');
-                    
-                    embeds.push(embed);
-                }
-
-                await interaction.reply({ embeds: embeds });
             }
 
         } catch (error) {
