@@ -71,11 +71,12 @@ const ENEMIES = {
 };
 
 class InteractiveCombat {
-    constructor(userId, enemy, interaction) {
+    constructor(userId, enemy, interaction, guildId) {
         this.userId = userId;
         this.enemy = enemy;
         this.interaction = interaction;
-        this.player = playerManager.getPlayer(userId);
+        this.guildId = guildId;
+        this.player = playerManager.getPlayer(userId, guildId);
         this.playerHp = this.player.stats.hp;
         this.playerMana = this.player.stats.mana || this.player.stats.maxMana || 50;
         this.enemyHp = enemy.hp;

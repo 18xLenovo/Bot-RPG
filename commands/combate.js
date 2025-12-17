@@ -24,7 +24,7 @@ module.exports = {
         const enemy = generateEnemy(player.level);
 
         // Iniciar combate interactivo
-        const combat = new InteractiveCombat(userId, enemy, interaction);
+        const combat = new InteractiveCombat(userId, enemy, interaction, guildId);
         await combat.start();
     },
 };
