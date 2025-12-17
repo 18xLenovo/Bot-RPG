@@ -88,6 +88,14 @@ module.exports = {
                 .setDescription('Ver lista de items disponibles')),
 
     async execute(interaction, guildId) {
+        // Verificar que haya miembro
+        if (!interaction.member) {
+            return interaction.reply({
+                content: '❌ Este comando solo funciona en servidores.',
+                ephemeral: true
+            });
+        }
+
         // Verificar permisos de admin
         if (!interaction.member.permissions.has('ADMINISTRATOR')) {
             return interaction.reply({
@@ -180,8 +188,20 @@ module.exports = {
 
                 // Obtener el personaje y aumentar la stat
                 const player = playerManager.getPlayer(targetId, guildId);
-                if (player.stats[stat]) {
+                if (!player) {
+                    return interaction.reply({
+                        content: `❌ ${targetUser.username} no tiene un personaje creado.`,
+                        ephemeral: true
+                    });
+                }
+
+                if (player.stats && player.stats[stat] !== undefined) {
                     player.stats[stat] += cantidad;
+                } else {
+                    return interaction.reply({
+                        content: `❌ La stat ${stat} no existe.`,
+                        ephemeral: true
+                    });
                 }
 
                 // Guardar cambios

@@ -147,6 +147,13 @@ client.on('interactionCreate', async interaction => {
 
     if (!interaction.isChatInputCommand()) return;
 
+    if (!interaction.guildId) {
+        return interaction.reply({
+            content: '❌ Este bot solo funciona en servidores, no en mensajes directos.',
+            ephemeral: true
+        });
+    }
+
     const command = client.commands.get(interaction.commandName);
 
     if (!command) return;
