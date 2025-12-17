@@ -147,7 +147,7 @@ Deberías ver:
 - 💬 Más interacción en Discord
 - 🌟 Diferenciación de otros bots
 
-## 🚀 Próximos Pasos (Opcional)
+## 🚀 Próximos Pasos 
 
 ### Mejoras Futuras Posibles
 - [ ] Chat de clan privado
