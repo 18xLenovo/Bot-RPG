@@ -284,7 +284,9 @@ class InteractiveCombat {
         
         this.log.push(`⚔️ Atacas al ${this.enemy.name}: **${damage.damage}** de daño ${damage.isCritical ? '💥 ¡CRÍTICO!' : ''}`);
 
+        // Verificar si el enemigo ha sido derrotado
         if (this.enemyHp <= 0) {
+            this.enemyHp = 0;
             return await this.endCombat(true);
         }
 
@@ -348,7 +350,9 @@ class InteractiveCombat {
             this.log.push(`🔥 ¡${this.enemy.name} está debilitado!`);
         }
 
+        // Verificar si el enemigo ha sido derrotado
         if (this.enemyHp <= 0) {
+            this.enemyHp = 0;
             return await this.endCombat(true);
         }
 
@@ -377,7 +381,7 @@ class InteractiveCombat {
             this.log.push(`🧪 Usas **${item.name}**: Recuperas **${item.value}** Maná`);
         }
 
-        playerManager.removeItem(this.userId, itemId, 1);
+        playerManager.removeItem(this.userId, itemId, 1, this.guildId);
         return await this.enemyTurn();
     }
 
@@ -417,7 +421,9 @@ class InteractiveCombat {
         this.playerHp -= damage.damage;
         this.log.push(`🗡️ ${this.enemy.name} ataca: **${damage.damage}** de daño ${damage.isCritical ? '💥 ¡CRÍTICO!' : ''}`);
 
+        // Verificar si el jugador ha sido derrotado
         if (this.playerHp <= 0) {
+            this.playerHp = 0;
             return await this.endCombat(false);
         }
 
@@ -486,10 +492,10 @@ class InteractiveCombat {
             .setTimestamp();
 
         if (victory) {
-            playerManager.addGold(this.userId, this.enemy.goldReward);
-            const levelsGained = playerManager.addExp(this.userId, this.enemy.expReward);
+            playerManager.addGold(this.userId, this.enemy.goldReward, this.guildId);
+            const levelsGained = playerManager.addExp(this.userId, this.enemy.expReward, this.guildId);
             
-            const newPlayer = playerManager.getPlayer(this.userId);
+            const newPlayer = playerManager.getPlayer(this.userId, this.guildId);
             const totalWins = (this.player.wins || 0) + 1;
             const totalBattles = totalWins + (this.player.losses || 0);
             const winRate = Math.round((totalWins / totalBattles) * 100);
@@ -516,11 +522,11 @@ class InteractiveCombat {
             }
 
             this.player.wins = totalWins;
-            playerManager.updatePlayer(this.userId, this.player);
+            playerManager.updatePlayer(this.userId, this.player, this.guildId);
         } else {
             const goldLost = Math.floor(this.player.gold * 0.1);
-            playerManager.addGold(this.userId, -goldLost);
-            const newPlayer = playerManager.getPlayer(this.userId);
+            playerManager.addGold(this.userId, -goldLost, this.guildId);
+            const newPlayer = playerManager.getPlayer(this.userId, this.guildId);
             const totalLosses = (this.player.losses || 0) + 1;
             
             embed.addFields(
@@ -537,7 +543,7 @@ class InteractiveCombat {
             );
 
             this.player.losses = totalLosses;
-            playerManager.updatePlayer(this.userId, this.player);
+            playerManager.updatePlayer(this.userId, this.player, this.guildId);
         }
 
         await this.interaction.editReply({ embeds: [embed], components: [] });
