@@ -18,35 +18,43 @@ module.exports = {
             });
         }
 
+        const totalCompleted = player.completedQuests?.length || 0;
         const embed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle('📜 Misiones Disponibles')
-            .setDescription('Completa misiones para obtener recompensas');
+            .setColor('#3498DB')
+            .setTitle('📜 TABLA DE MISIONES')
+            .setDescription(`╔═══════════════════════════╗\n⭐ **Nivel:** \`${player.level}\` | 🎯 **Completadas:** \`${totalCompleted}/${QUESTS.length}\`\n╚═══════════════════════════╝\n\n💡 *Completa misiones para ganar oro y experiencia*`);
 
-        QUESTS.forEach(quest => {
+        QUESTS.forEach((quest, index) => {
             const completed = player.completedQuests?.includes(quest.id);
             const canAccept = player.level >= quest.levelRequired;
             
-            let status = completed ? '✅ Completada' : canAccept ? '📋 Disponible' : '🔒 Bloqueada';
+            let status = completed ? '✅' : canAccept ? '🟢' : '🔴';
+            let statusText = completed ? 'COMPLETADA' : canAccept ? 'DISPONIBLE' : 'BLOQUEADA';
             let requirements = [];
 
             if (quest.requirements.wins) {
                 const current = player.wins || 0;
-                requirements.push(`Victorias: ${current}/${quest.requirements.wins}`);
+                const progress = Math.min(100, Math.floor((current / quest.requirements.wins) * 100));
+                requirements.push(`🎯 Victorias: ${current}/${quest.requirements.wins} (${progress}%)`);
             }
             if (quest.requirements.level) {
-                requirements.push(`Nivel: ${quest.requirements.level}`);
+                requirements.push(`⭐ Nivel: ${quest.requirements.level}`);
             }
             if (quest.requirements.completedQuests) {
                 const current = player.completedQuests?.length || 0;
-                requirements.push(`Misiones completadas: ${current}/${quest.requirements.completedQuests}`);
+                requirements.push(`📜 Misiones: ${current}/${quest.requirements.completedQuests}`);
             }
 
-            const rewards = `💰 ${quest.rewards.gold} oro, ⭐ ${quest.rewards.exp} EXP`;
+            const difficulty = {
+                'Fácil': '🟢',
+                'Media': '🟡',
+                'Difícil': '🔴',
+                'Muy Difícil': '🔵'
+            }[quest.difficulty] || '⚪';
 
-            embed.addFields({
-                name: `${status} ${quest.name} [${quest.difficulty}]`,
-                value: `*${quest.description}*\n**Requisitos:** ${requirements.join(', ')}\n**Recompensas:** ${rewards}\n**Nivel mínimo:** ${quest.levelRequired}`,
+            const value = `\`\`\`yaml\n${quest.description}\n\nEstado: ${statusText}\nDificultad: ${quest.difficulty}\nNivel Mínimo: ${quest.levelRequired}\n\nRequisitos:\n${requirements.map(r => `  • ${r}`).join('\n')}\n\nRecompensas:\n  🪙 ${quest.rewards.gold.toLocaleString()} oro\n  ⭐ ${quest.rewards.exp.toLocaleString()} EXP\n\`\`\``;            embed.addFields({
+                name: `━━ ${status} ${index + 1}. ${quest.name.toUpperCase()} ${difficulty}`,
+                value: value,
                 inline: false
             });
         });

@@ -88,15 +88,15 @@ module.exports = {
             playerManager.addGold(userId, -500, guildId);
 
             const embed = new EmbedBuilder()
-                .setColor('#ffd700')
-                .setTitle('⚜️ Clan Creado')
-                .setDescription(`**${name}**\n*${description}*`)
+                .setColor('#FFD700')
+                .setTitle('⚜️ ¡CLAN CREADO!')
+                .setDescription(`╔═══════════════════════════╗\n🏰 **${name}**\n📜 *${description}*\n╚═══════════════════════════╝`)
                 .addFields(
-                    { name: '👑 Líder', value: `<@${userId}>`, inline: true },
-                    { name: '👥 Miembros', value: '1', inline: true },
-                    { name: '⭐ Nivel', value: '1', inline: true }
+                    { name: '━ 👑 LÍDER ━', value: `\`\`\`\n<@${userId}>\n\`\`\``, inline: true },
+                    { name: '━ 👥 MIEMBROS ━', value: '\`\`\`\n1/50\n\`\`\`', inline: true },
+                    { name: '━ ⭐ NIVEL ━', value: '\`\`\`\n1\n\`\`\`', inline: true }
                 )
-                .setFooter({ text: 'Usa /clan invitar para añadir miembros' })
+                .setFooter({ text: '💡 Usa /clan invitar para añadir miembros' })
                 .setTimestamp();
 
             await interaction.reply({ embeds: [embed] });

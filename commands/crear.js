@@ -13,7 +13,11 @@ module.exports = {
                     { name: '⚔️ Guerrero - Fuerte y resistente', value: 'guerrero' },
                     { name: '🔮 Mago - Maestro de la magia', value: 'mago' },
                     { name: '🏹 Arquero - Rápido y preciso', value: 'arquero' },
-                    { name: '✨ Clérigo - Sanador del grupo', value: 'clerigo' }
+                    { name: '✨ Clérigo - Sanador del grupo', value: 'clerigo' },
+                    { name: '🗡️ Asesino - Críticos letales', value: 'asesino' },
+                    { name: '🛡️ Paladín - Defensor sagrado', value: 'paladin' },
+                    { name: '🔥 Berserker - Furia salvaje', value: 'berserker' },
+                    { name: '❄️ Nigromante - Artes oscuras', value: 'nigromante' }
                 )),
 
     async execute(interaction, guildId) {
@@ -30,22 +34,22 @@ module.exports = {
         const classInfo = CLASSES[className];
 
         const embed = new EmbedBuilder()
-            .setColor('#00ff00')
-            .setTitle('🎉 ¡Personaje Creado!')
-            .setDescription(`${classInfo.emoji} **${classInfo.name}**\n*${classInfo.description}*`)
+            .setColor('#00FF7F')
+            .setTitle('🎉 ¡PERSONAJE CREADO CON ÉXITO!')
+            .setDescription(`╔═══════════════════════════╗\n${classInfo.emoji} **${classInfo.name.toUpperCase()}**\n📜 *${classInfo.description}*\n╚═══════════════════════════╝`)
             .addFields(
                 { 
-                    name: '📊 Estadísticas Iniciales', 
-                    value: `❤️ HP: ${player.stats.hp}\n⚔️ ATK: ${player.stats.atk}\n🛡️ DEF: ${player.stats.def}\n⚡ SPD: ${player.stats.spd}`,
+                    name: '━━ 📊 ESTADÍSTICAS ━━', 
+                    value: `\`\`\`yaml\n❤️  HP:   ${player.stats.hp}\n⚔️  ATK:  ${player.stats.atk}\n🛡️  DEF:  ${player.stats.def}\n⚡  SPD:  ${player.stats.spd}\n💙  Maná: ${player.stats.maxMana}\n\`\`\``,
                     inline: true 
                 },
                 { 
-                    name: '💰 Recursos', 
-                    value: `🪙 Oro: ${player.gold}\n⭐ Nivel: ${player.level}`,
+                    name: '━━ 💰 RECURSOS ━━', 
+                    value: `\`\`\`yaml\n🪙  Oro:   ${player.gold}\n⭐  Nivel: ${player.level}\n🎯  EXP:   0/${player.expToNext}\n\`\`\``,
                     inline: true 
                 }
             )
-            .setFooter({ text: 'Usa /ayuda para ver todos los comandos' })
+            .setFooter({ text: '💡 Usa /ayuda para ver todos los comandos disponibles' })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });

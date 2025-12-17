@@ -3,40 +3,53 @@ const { CLASSES } = require('../utils/playerManager');
 
 function createCharacterEmbed(player, userId, username) {
     const classInfo = CLASSES[player.class];
+    const winRate = ((player.wins || 0) + (player.losses || 0)) > 0 
+        ? Math.round(((player.wins || 0) / ((player.wins || 0) + (player.losses || 0))) * 100) 
+        : 0;
     
     const embed = new EmbedBuilder()
-        .setColor('#00ff00')
-        .setTitle(`${classInfo.emoji} Personaje de ${username}`)
-        .setDescription(`**Clase:** ${classInfo.name}\n**Nivel:** ${player.level}\n**Reputación:** ${player.reputation || 0}`)
+        .setColor('#7289DA')
+        .setTitle(`${classInfo.emoji} ${username.toUpperCase()}`)
+        .setDescription(`╔══════════════════╗\n**${classInfo.name}** | Nivel **${player.level}** | 🌟 ${player.reputation || 0} Reputación\n╚══════════════════╝`)
         .addFields(
             { 
-                name: '📊 Estadísticas', 
-                value: `❤️ HP: ${player.stats.hp}\n⚔️ ATK: ${player.stats.atk}\n🛡️ DEF: ${player.stats.def}\n⚡ SPD: ${player.stats.spd}\n💙 Maná: ${player.stats.mana || player.stats.maxMana}/${player.stats.maxMana}`,
+                name: '━━━━ 📊 ESTADÍSTICAS ━━━━', 
+                value: `\`\`\`yaml\n❤️  HP:    ${player.stats.hp}\n⚔️  ATK:   ${player.stats.atk}\n🛡️  DEF:   ${player.stats.def}\n⚡  SPD:   ${player.stats.spd}\n💙  Maná:  ${player.stats.mana || player.stats.maxMana}/${player.stats.maxMana}\n\`\`\``,
                 inline: true 
             },
             { 
-                name: '💰 Recursos', 
-                value: `🪙 Oro: ${player.gold}\n⭐ EXP: ${player.exp}/${player.expToNext}`,
+                name: '━━━━ 💰 RECURSOS ━━━━', 
+                value: `\`\`\`yaml\n🪙  Oro:  ${player.gold.toLocaleString()}\n⭐  EXP:  ${player.exp}/${player.expToNext}\n📊  Prog: ${'█'.repeat(Math.floor((player.exp/player.expToNext)*10))}${'░'.repeat(10-Math.floor((player.exp/player.expToNext)*10))}\n\`\`\``,
                 inline: true 
             },
             { 
-                name: '🏆 Récord', 
-                value: `✅ Victorias: ${player.wins || 0}\n❌ Derrotas: ${player.losses || 0}`,
+                name: '━━━━ 🏆 RÉCORD ━━━━', 
+                value: `\`\`\`yaml\n✅  Victorias: ${player.wins || 0}\n❌  Derrotas:  ${player.losses || 0}\n📈  Ratio:     ${winRate}%\n\`\`\``,
                 inline: true 
             }
         )
-        .setFooter({ text: `ID: ${userId}` })
+        .setFooter({ text: `⚡ Aventurero ID: ${userId}` })
         .setTimestamp();
 
     // Mostrar equipo
     if (player.equipment) {
         const equipmentText = [];
-        if (player.equipment.weapon) equipmentText.push(`⚔️ ${player.equipment.weapon.name}`);
-        if (player.equipment.armor) equipmentText.push(`🛡️ ${player.equipment.armor.name}`);
-        if (player.equipment.accessory) equipmentText.push(`💍 ${player.equipment.accessory.name}`);
+        if (player.equipment.weapon) equipmentText.push(`⚔️ **Arma:** ${player.equipment.weapon.name}`);
+        if (player.equipment.armor) equipmentText.push(`🛡️ **Armadura:** ${player.equipment.armor.name}`);
+        if (player.equipment.accessory) equipmentText.push(`💍 **Accesorio:** ${player.equipment.accessory.name}`);
         
         if (equipmentText.length > 0) {
-            embed.addFields({ name: '🎒 Equipamiento', value: equipmentText.join('\n') });
+            embed.addFields({ 
+                name: '━━━━━━━━━━ 🎒 EQUIPAMIENTO ━━━━━━━━━━', 
+                value: `\`\`\`\n${equipmentText.join('\n')}\n\`\`\``,
+                inline: false 
+            });
+        } else {
+            embed.addFields({ 
+                name: '━━━━━━━━━━ 🎒 EQUIPAMIENTO ━━━━━━━━━━', 
+                value: '```\n❌ Sin equipo equipado\n```',
+                inline: false 
+            });
         }
     }
 
@@ -44,13 +57,17 @@ function createCharacterEmbed(player, userId, username) {
 }
 
 function createInventoryEmbed(player, username) {
+    const totalItems = player.inventory ? player.inventory.reduce((sum, item) => sum + (item.quantity || 1), 0) : 0;
     const embed = new EmbedBuilder()
-        .setColor('#ffaa00')
-        .setTitle(`🎒 Inventario de ${username}`)
-        .setDescription(`💰 Oro: **${player.gold}**\n\n__Items:__`);
+        .setColor('#FFA500')
+        .setTitle(`🎒 INVENTARIO DE ${username.toUpperCase()}`)
+        .setDescription(`╔═══════════════════════════╗\n💰 **Oro:** \`${player.gold.toLocaleString()}\` 🪙\n📦 **Total Items:** \`${totalItems}\`\n╚═══════════════════════════╝`);
 
     if (!player.inventory || player.inventory.length === 0) {
-        embed.setDescription(`💰 Oro: **${player.gold}**\n\n*Tu inventario está vacío*`);
+        embed.addFields({ 
+            name: '📭 Inventario Vacío', 
+            value: '```\n¡Visita la tienda para comprar items!\nUsa /tienda para ver los items disponibles.\n```' 
+        });
         return embed;
     }
 
@@ -85,13 +102,15 @@ function createInventoryEmbed(player, username) {
     for (const [type, items] of Object.entries(grouped)) {
         if (items.length > 0) {
             const itemList = items.map(item => {
-                const qty = item.quantity ? ` x${item.quantity}` : '';
-                return `${typeEmojis[type]} **${item.name}**${qty}`;
+                const qty = item.quantity ? ` \`x${item.quantity}\`` : '';
+                const stats = item.stats ? ` | ${Object.entries(item.stats).map(([stat, val]) => `+${val} ${stat.toUpperCase()}`).join(' ')}` : '';
+                return `➤ ${item.name}${qty}${stats}`;
             }).join('\n');
 
             embed.addFields({ 
-                name: `${typeEmojis[type]} ${typeNames[type]}`, 
-                value: itemList 
+                name: `━━━ ${typeEmojis[type]} ${typeNames[type].toUpperCase()} ━━━`, 
+                value: `\`\`\`yaml\n${itemList}\n\`\`\``,
+                inline: false
             });
         }
     }
@@ -119,28 +138,41 @@ function createCombatEmbed(result, username) {
 }
 
 function createLeaderboardEmbed(players, type = 'level') {
+    const typeInfo = {
+        level: { emoji: '⭐', title: 'NIVEL', color: '#FFD700' },
+        gold: { emoji: '💰', title: 'ORO', color: '#FFA500' },
+        wins: { emoji: '🏆', title: 'VICTORIAS', color: '#00FF00' }
+    };
+    
+    const info = typeInfo[type];
     const embed = new EmbedBuilder()
-        .setColor('#ffd700')
-        .setTitle('🏆 Tabla de Clasificación')
+        .setColor(info.color)
+        .setTitle(`${info.emoji} RANKING - TOP ${info.title}`)
+        .setDescription('╔═══════════════════════════════╗\n    🏆 Los mejores aventureros 🏆\n╚═══════════════════════════════╝')
         .setTimestamp();
 
     if (!players || players.length === 0) {
-        embed.setDescription('*No hay jugadores en el ranking*');
+        embed.addFields({ name: '❌ Sin datos', value: '```\nNo hay jugadores en el ranking\n```' });
         return embed;
     }
 
     const rankings = players.slice(0, 10).map((p, index) => {
-        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+        const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `\`${(index + 1).toString().padStart(2, ' ')}.\``;
         if (type === 'level') {
-            return `${medal} **<@${p.userId}>** - Nivel ${p.level} (${p.exp} EXP)`;
+            return `${medal} <@${p.userId}> ━ **Nv.${p.level}** | ${p.exp} EXP`;
         } else if (type === 'gold') {
-            return `${medal} **<@${p.userId}>** - ${p.gold} 🪙`;
+            return `${medal} <@${p.userId}> ━ **${p.gold.toLocaleString()}** 🪙`;
         } else if (type === 'wins') {
-            return `${medal} **<@${p.userId}>** - ${p.wins || 0} victorias`;
+            const totalBattles = (p.wins || 0) + (p.losses || 0);
+            const winRate = totalBattles > 0 ? Math.round((p.wins || 0) / totalBattles * 100) : 0;
+            return `${medal} <@${p.userId}> ━ **${p.wins || 0}** victorias (${winRate}%)`;
         }
     });
 
-    embed.setDescription(rankings.join('\n'));
+    embed.addFields({ 
+        name: '━━━━━━━━ CLASIFICACIÓN ━━━━━━━━', 
+        value: rankings.join('\n') 
+    });
     return embed;
 }
 

@@ -86,9 +86,18 @@ class InteractiveCombat {
         this.defending = false;
     }
 
+    createHealthBar(current, max) {
+        const percentage = Math.max(0, Math.min(100, (current / max) * 100));
+        const filled = Math.floor(percentage / 10);
+        const empty = 10 - filled;
+        return '█'.repeat(filled) + '░'.repeat(empty) + ` ${Math.floor(percentage)}%`;
+    }
+
     async start() {
-        this.log.push(`⚔️ **Combate Iniciado**`);
-        this.log.push(`${this.player.class === 'guerrero' ? '⚔️' : this.player.class === 'mago' ? '🔮' : this.player.class === 'arquero' ? '🏹' : '✨'} **${this.interaction.user.username}** (Nivel ${this.player.level}) vs ${this.enemy.emoji} **${this.enemy.name}** (Nivel ${this.enemy.level})`);
+        this.log.push(`⚔️ ¡COMBATE INICIADO!`);
+        this.log.push(`👤 **${this.interaction.user.username}** Nv.${this.player.level}`);
+        this.log.push(`   VS`);
+        this.log.push(`${this.enemy.emoji} **${this.enemy.name}** Nv.${this.enemy.level}`);
         this.log.push('');
 
         return await this.playerTurn();
@@ -103,19 +112,23 @@ class InteractiveCombat {
         // Actualizar buffs
         this.updateBuffs();
 
+        const playerHpBar = this.createHealthBar(this.playerHp, this.player.stats.hp);
+        const playerManaBar = this.createHealthBar(this.playerMana, this.player.stats.maxMana);
+        const enemyHpBar = this.createHealthBar(this.enemyHp, this.enemy.maxHp);
+        
         const embed = new EmbedBuilder()
-            .setColor('#00ff00')
-            .setTitle(`⚔️ Turno ${this.turn} - Tu Turno`)
-            .setDescription(this.log.slice(-10).join('\n'))
+            .setColor('#FF4500')
+            .setTitle(`⚔️ COMBATE - TURNO ${this.turn}`)
+            .setDescription(`╔═══════════════════════════╗\n${this.log.slice(-8).join('\n')}\n╚═══════════════════════════╝`)
             .addFields(
                 { 
-                    name: '👤 Tu Estado', 
-                    value: `❤️ HP: ${this.playerHp}/${this.player.stats.hp}\n💙 Maná: ${this.playerMana}/${this.player.stats.maxMana}`,
+                    name: '━━━ 👤 TU ESTADO ━━━', 
+                    value: `\`\`\`yaml\n❤️  HP:    ${this.playerHp}/${this.player.stats.hp}\n${playerHpBar}\n\n💙  Maná:  ${this.playerMana}/${this.player.stats.maxMana}\n${playerManaBar}\n\`\`\``,
                     inline: true 
                 },
                 { 
-                    name: `${this.enemy.emoji} ${this.enemy.name}`, 
-                    value: `❤️ HP: ${this.enemyHp}/${this.enemy.maxHp}`,
+                    name: `━━━ ${this.enemy.emoji} ENEMIGO ━━━`, 
+                    value: `\`\`\`yaml\n${this.enemy.name} Nv.${this.enemy.level}\n\n❤️  HP: ${this.enemyHp}/${this.enemy.maxHp}\n${enemyHpBar}\n\`\`\``,
                     inline: true 
                 }
             );
@@ -466,34 +479,63 @@ class InteractiveCombat {
 
     async endCombat(victory) {
         const embed = new EmbedBuilder()
-            .setTitle(victory ? '🎉 ¡VICTORIA!' : '💀 Derrota...')
-            .setDescription(this.log.join('\n'))
-            .setColor(victory ? '#00ff00' : '#ff0000')
+            .setTitle(victory ? '🎉 ¡VICTORIA GLORIOSA!' : '💀 DERROTA...')
+            .setDescription(`╔═══════════════════════════╗\n${victory ? '🏆 ¡Has derrotado al enemigo!' : '☠️ Has caído en combate...'}\n╚═══════════════════════════╝\n\n**Resumen del Combate:**\n${this.log.slice(-6).join('\n')}`)
+            .setColor(victory ? '#00FF00' : '#8B0000')
             .setTimestamp();
 
         if (victory) {
             playerManager.addGold(this.userId, this.enemy.goldReward);
             const levelsGained = playerManager.addExp(this.userId, this.enemy.expReward);
+            
+            const newPlayer = playerManager.getPlayer(this.userId);
+            const totalWins = (this.player.wins || 0) + 1;
+            const totalBattles = totalWins + (this.player.losses || 0);
+            const winRate = Math.round((totalWins / totalBattles) * 100);
 
             embed.addFields(
-                { name: '💰 Recompensas', value: `+${this.enemy.goldReward} oro\n+${this.enemy.expReward} EXP` }
+                { 
+                    name: '━━━━ 💰 RECOMPENSAS ━━━━', 
+                    value: `\`\`\`yaml\n🪙  Oro:  +${this.enemy.goldReward.toLocaleString()}\n⭐  EXP:  +${this.enemy.expReward.toLocaleString()}\n\nOro Total: ${newPlayer.gold.toLocaleString()}\n\`\`\``,
+                    inline: true
+                },
+                { 
+                    name: '━━━━ 🏆 ESTADÍSTICAS ━━━━', 
+                    value: `\`\`\`yaml\n✅  Victorias: ${totalWins}\n📈  Ratio:     ${winRate}%\n🎯  Batallas:  ${totalBattles}\n\`\`\``,
+                    inline: true
+                }
             );
 
             if (levelsGained > 0) {
                 embed.addFields({ 
-                    name: '🆙 ¡Subiste de nivel!', 
-                    value: `Ahora eres nivel ${this.player.level + levelsGained}` 
+                    name: '━━━━━━ 🆙 ¡NIVEL SUBIDO! ━━━━━━', 
+                    value: `\`\`\`\n🌟 Nivel anterior: ${this.player.level}\n🌟 Nivel actual:   ${this.player.level + levelsGained}\n\n✨ ¡Has ganado +${levelsGained} nivel(es)!\n\`\`\``,
+                    inline: false
                 });
             }
 
-            this.player.wins = (this.player.wins || 0) + 1;
+            this.player.wins = totalWins;
             playerManager.updatePlayer(this.userId, this.player);
         } else {
             const goldLost = Math.floor(this.player.gold * 0.1);
             playerManager.addGold(this.userId, -goldLost);
-            embed.addFields({ name: '💔 Penalización', value: `Pierdes ${goldLost} oro` });
+            const newPlayer = playerManager.getPlayer(this.userId);
+            const totalLosses = (this.player.losses || 0) + 1;
+            
+            embed.addFields(
+                { 
+                    name: '━━━━ 💔 PENALIZACIÓN ━━━━', 
+                    value: `\`\`\`diff\n- Oro perdido: ${goldLost.toLocaleString()}\n\nOro restante: ${newPlayer.gold.toLocaleString()}\n\`\`\``,
+                    inline: true
+                },
+                { 
+                    name: '━━━━ ☠️ REGISTRO ━━━━', 
+                    value: `\`\`\`yaml\n❌  Derrotas:  ${totalLosses}\n💔  Pérdidas:  -10%\n\`\`\``,
+                    inline: true
+                }
+            );
 
-            this.player.losses = (this.player.losses || 0) + 1;
+            this.player.losses = totalLosses;
             playerManager.updatePlayer(this.userId, this.player);
         }
 

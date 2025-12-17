@@ -1,0 +1,24 @@
+{
+  "clan_1765935099401": {
+    "id": "clan_1765935099401",
+    "name": "FUXK",
+    "description": "TU12",
+    "leader": "838993525692432394",
+    "members": [
+      "838993525692432394"
+    ],
+    "level": 1,
+    "exp": 0,
+    "expToNext": 1000,
+    "treasury": 0,
+    "wins": 0,
+    "dungeonClears": 0,
+    "createdAt": 1765935099401,
+    "announcements": [
+      {
+        "message": "HOLAAA",
+        "timestamp": 1765935114792
+      }
+    ]
+  }
+}

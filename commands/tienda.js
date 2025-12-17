@@ -29,21 +29,21 @@ module.exports = {
         }
 
         const category = interaction.options.getString('categoria') || 'consumibles';
-        const items = SHOP_ITEMS[category];
+        const items = SHOP_ITEMS[category].filter(item => item.source === 'shop');
 
         const embed = new EmbedBuilder()
-            .setColor('#ffaa00')
-            .setTitle('🏪 Tienda del Aventurero')
-            .setDescription(`💰 Tu oro: **${player.gold}**\n\n**Categoría:** ${getCategoryName(category)}`);
+            .setColor('#FFA500')
+            .setTitle('🏪 TIENDA DEL AVENTURERO')
+            .setDescription(`╔═══════════════════════════╗\n💰 **Tu Oro:** \`${player.gold.toLocaleString()}\` 🪙\n🏪 **Categoría:** ${getCategoryName(category)}\n╚═══════════════════════════╝`);
 
         items.forEach(item => {
             const statsText = item.stats ? 
-                Object.entries(item.stats).map(([stat, val]) => `+${val} ${stat.toUpperCase()}`).join(', ') 
-                : item.description;
+                Object.entries(item.stats).map(([stat, val]) => `+${val} ${stat.toUpperCase()}`).join(' | ') 
+                : item.effect;
 
             embed.addFields({
-                name: `${item.name} - ${item.price}🪙`,
-                value: statsText,
+                name: `${item.name} ─ ${item.price.toLocaleString()}🪙`,
+                value: `\`\`\`\n${item.description}\n${statsText ? statsText : ''}\n\`\`\``,
                 inline: true
             });
         });

@@ -1,6 +1,15 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { PlayerManager: playerManager } = require('../utils/playerManager');
 
+// Colores para eventos
+const EVENT_COLORS = {
+    mercader_misterioso: '#9B59B6',
+    aldeano_necesitado: '#3498DB',
+    tesoro_escondido: '#F1C40F',
+    combate_honor: '#E74C3C',
+    guardian_bosque: '#2ECC71'
+};
+
 // Eventos aleatorios con decisiones
 const EVENTS = [
     {

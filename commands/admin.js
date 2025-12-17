@@ -164,14 +164,18 @@ module.exports = {
                 const cantidad = interaction.options.getInteger('cantidad');
                 playerManager.addGold(targetId, cantidad, guildId);
 
+                const newPlayer = playerManager.getPlayer(targetId, guildId);
                 const embed = new EmbedBuilder()
                     .setColor('#FFD700')
-                    .setTitle('💰 Monedas Añadidas')
+                    .setTitle('🛠️ COMANDO ADMIN - MONEDAS')
+                    .setDescription(`╔═══════════════════════════╗\n✅ Operación completada exitosamente\n╚═══════════════════════════╝`)
                     .addFields(
-                        { name: '👤 Jugador', value: targetUser.username, inline: true },
-                        { name: '💵 Cantidad', value: `+${cantidad}`, inline: true },
-                        { name: '👑 Admin', value: interaction.user.username, inline: true }
+                        { name: '━━━ 👤 JUGADOR ━━━', value: `\`\`\`\n${targetUser.username}\n\`\`\``, inline: true },
+                        { name: '━━━ 💰 CANTIDAD ━━━', value: `\`\`\`diff\n+ ${cantidad.toLocaleString()} 🪙\n\`\`\``, inline: true },
+                        { name: '━━━ 👑 ADMIN ━━━', value: `\`\`\`\n${interaction.user.username}\n\`\`\``, inline: true },
+                        { name: '━━━━━━━━━━ 💵 TOTAL ORO ━━━━━━━━━━', value: `\`\`\`yaml\nOro actual: ${newPlayer.gold.toLocaleString()} 🪙\n\`\`\``, inline: false }
                     )
+                    .setFooter({ text: `ID: ${targetId}` })
                     .setTimestamp();
 
                 await interaction.reply({ embeds: [embed] });

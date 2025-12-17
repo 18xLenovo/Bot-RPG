@@ -144,6 +144,134 @@ const CLASSES = {
                 element: 'holy'
             }
         ]
+    },
+    asesino: {
+        name: 'Asesino',
+        emoji: '🗡️',
+        stats: { hp: 90, atk: 22, def: 7, spd: 16, maxMana: 70, mana: 70 },
+        description: 'Maestro de las sombras con críticos letales',
+        abilities: [
+            { 
+                id: 'golpe_silencioso', 
+                name: 'Golpe Silencioso', 
+                description: 'Ataque furtivo (180% ATK, 70% crit)',
+                manaCost: 18,
+                damage: 1.8,
+                critBonus: 0.7
+            },
+            { 
+                id: 'danza_muerte', 
+                name: 'Danza de la Muerte', 
+                description: '5 ataques rápidos (60% ATK cada uno)',
+                manaCost: 30,
+                damage: 0.6,
+                hits: 5
+            },
+            { 
+                id: 'ejecucion', 
+                name: 'Ejecución', 
+                description: 'Golpe crítico garantizado (350% ATK)',
+                manaCost: 45,
+                damage: 3.5,
+                critBonus: 1.0
+            }
+        ]
+    },
+    paladin: {
+        name: 'Paladín',
+        emoji: '🛡️',
+        stats: { hp: 110, atk: 16, def: 14, spd: 9, maxMana: 80, mana: 80 },
+        description: 'Defensor sagrado con balance perfecto',
+        abilities: [
+            { 
+                id: 'escudo_sagrado', 
+                name: 'Escudo Sagrado', 
+                description: 'Aumenta DEF 70% y regenera 30 HP',
+                manaCost: 25,
+                type: 'buff',
+                effect: { def: 1.7, duration: 3 },
+                heal: 30
+            },
+            { 
+                id: 'martillo_justicia', 
+                name: 'Martillo de Justicia', 
+                description: 'Golpe sagrado (220% ATK)',
+                manaCost: 20,
+                damage: 2.2,
+                element: 'holy'
+            },
+            { 
+                id: 'aura_protectora', 
+                name: 'Aura Protectora', 
+                description: 'Aumenta DEF y regenera HP por 3 turnos',
+                manaCost: 35,
+                type: 'buff',
+                effect: { def: 1.5, regen: 20, duration: 3 }
+            }
+        ]
+    },
+    berserker: {
+        name: 'Berserker',
+        emoji: '🔥',
+        stats: { hp: 95, atk: 24, def: 5, spd: 12, maxMana: 60, mana: 60 },
+        description: 'Furia incontrolable con daño masivo',
+        abilities: [
+            { 
+                id: 'furia_salvaje', 
+                name: 'Furia Salvaje', 
+                description: 'Aumenta ATK 100% pero reduce DEF 50%',
+                manaCost: 20,
+                type: 'buff',
+                effect: { atk: 2.0, def: 0.5, duration: 3 }
+            },
+            { 
+                id: 'golpe_sangriento', 
+                name: 'Golpe Sangriento', 
+                description: 'Ataque brutal (280% ATK), te daña 15 HP',
+                manaCost: 25,
+                damage: 2.8,
+                recoil: 15
+            },
+            { 
+                id: 'ira_titan', 
+                name: 'Ira del Titán', 
+                description: 'Devastador golpe final (450% ATK)',
+                manaCost: 50,
+                damage: 4.5
+            }
+        ]
+    },
+    nigromante: {
+        name: 'Nigromante',
+        emoji: '❄️',
+        stats: { hp: 85, atk: 19, def: 7, spd: 11, maxMana: 110, mana: 110 },
+        description: 'Maestro de las artes oscuras y la necromanc\u00eda',
+        abilities: [
+            { 
+                id: 'drenar_vida', 
+                name: 'Drenar Vida', 
+                description: 'Absorbe 150% del daño como HP',
+                manaCost: 22,
+                damage: 1.5,
+                lifesteal: 1.5
+            },
+            { 
+                id: 'maldicion', 
+                name: 'Maldición', 
+                description: 'Reduce ATK y DEF del enemigo 40%',
+                manaCost: 30,
+                debuff: { atk: 0.6, def: 0.6, duration: 3 }
+            },
+            { 
+                id: 'ejercito_muertos', 
+                name: 'Ejército de Muertos', 
+                description: 'Invoca esqueletos (4x 80% ATK)',
+                manaCost: 45,
+                damage: 0.8,
+                hits: 4,
+                element: 'dark'
+            }
+        ]
     }
 };
 

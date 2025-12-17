@@ -4,7 +4,9 @@ const RARITIES = {
     poco_comun: { emoji: '🟢', color: '#00FF00', name: 'Poco Común' },
     especial: { emoji: '🔵', color: '#0066FF', name: 'Especial' },
     epico: { emoji: '🟣', color: '#9933FF', name: 'Épico' },
-    legendario: { emoji: '⭐', color: '#FFD700', name: 'Legendario' }
+    legendario: { emoji: '⭐', color: '#FFD700', name: 'Legendario' },
+    mitico: { emoji: '🔮', color: '#FF00FF', name: 'Mítico' },
+    celestial: { emoji: '🌟', color: '#FFFFFF', name: 'Celestial' }
 };
 
 // Tienda de items con sistema de rarezas
@@ -94,8 +96,38 @@ const SHOP_ITEMS = {
         
         // Legendario - Solo Mazmorras
         { id: 'anillo_infinito', name: '⭐ Anillo Infinito', rarity: 'legendario', type: 'accessory', stats: { atk: 15, def: 8, hp: 100, maxMana: 50 }, price: 0, description: '+15 ATK, +8 DEF, +100 HP, +50 Maná - Poder supremo', source: 'dungeon' },
+        
+        // Mítico - Solo eventos especiales
+        { id: 'corona_olimpo', name: '🔮 Corona del Olimpo', rarity: 'mitico', type: 'accessory', stats: { atk: 18, def: 12, hp: 150, spd: 5, maxMana: 70 }, price: 0, description: '+18 ATK, +12 DEF, +150 HP, +5 SPD, +70 Maná - Regalo de Zeus', source: 'event' },
+        { id: 'orbe_eternidad', name: '🔮 Orbe de la Eternidad', rarity: 'mitico', type: 'accessory', stats: { maxMana: 100, atk: 20, spd: 8 }, price: 0, description: '+100 Maná, +20 ATK, +8 SPD - Fragmento del tiempo', source: 'event' },
+        
+        // Celestial - Supremo
+        { id: 'diadema_destino', name: '🌟 Diadema del Destino', rarity: 'celestial', type: 'accessory', stats: { atk: 25, def: 15, hp: 200, spd: 10, maxMana: 100 }, price: 0, description: '+25 ATK, +15 DEF, +200 HP, +10 SPD, +100 Maná - Forjada con estrellas', source: 'event' },
     ]
 };
+
+// Agregar armas Míticas y Celestiales
+SHOP_ITEMS.armas.push(
+    // Mítico
+    { id: 'lanza_longinus', name: '🔮 Lanza de Longinus', rarity: 'mitico', type: 'weapon', stats: { atk: 32, spd: 6, hp: 80 }, price: 0, description: '+32 ATK, +6 SPD, +80 HP - Lanza del centurión', source: 'event' },
+    { id: 'mjolnir', name: '🔮 Mjölnir', rarity: 'mitico', type: 'weapon', stats: { atk: 35, def: 10, maxMana: 50 }, price: 0, description: '+35 ATK, +10 DEF, +50 Maná - Martillo de Thor', source: 'event' },
+    { id: 'excalibur', name: '🔮 Excalibur', rarity: 'mitico', type: 'weapon', stats: { atk: 33, spd: 8, def: 8, hp: 100 }, price: 0, description: '+33 ATK, +8 SPD, +8 DEF, +100 HP - Espada del rey', source: 'event' },
+    
+    // Celestial
+    { id: 'guadana_muerte', name: '🌟 Guadaña de la Muerte', rarity: 'celestial', type: 'weapon', stats: { atk: 45, spd: 12, maxMana: 80 }, price: 0, description: '+45 ATK, +12 SPD, +80 Maná - Portadora de almas', source: 'event' },
+    { id: 'baculo_creacion', name: '🌟 Báculo de la Creación', rarity: 'celestial', type: 'weapon', stats: { atk: 40, maxMana: 150, spd: 5, def: 12 }, price: 0, description: '+40 ATK, +150 Maná, +5 SPD, +12 DEF - Origen del universo', source: 'event' }
+);
+
+// Agregar armaduras Míticas y Celestiales
+SHOP_ITEMS.armaduras.push(
+    // Mítico
+    { id: 'armadura_zeus', name: '🔮 Armadura de Zeus', rarity: 'mitico', type: 'armor', stats: { def: 35, hp: 180, maxMana: 60 }, price: 0, description: '+35 DEF, +180 HP, +60 Maná - Vestimenta del dios del trueno', source: 'event' },
+    { id: 'manto_hades', name: '🔮 Manto de Hades', rarity: 'mitico', type: 'armor', stats: { def: 32, hp: 150, spd: 5, atk: 10 }, price: 0, description: '+32 DEF, +150 HP, +5 SPD, +10 ATK - Sombras del inframundo', source: 'event' },
+    
+    // Celestial
+    { id: 'tunica_cosmos', name: '🌟 Túnica del Cosmos', rarity: 'celestial', type: 'armor', stats: { def: 45, hp: 300, spd: 8, maxMana: 100 }, price: 0, description: '+45 DEF, +300 HP, +8 SPD, +100 Maná - Tejida con galaxias', source: 'event' },
+    { id: 'peto_inmortal', name: '🌟 Peto del Inmortal', rarity: 'celestial', type: 'armor', stats: { def: 50, hp: 350, atk: 15 }, price: 0, description: '+50 DEF, +350 HP, +15 ATK - Nunca morirás', source: 'event' }
+);
 
 // Misiones disponibles
 const QUESTS = [
