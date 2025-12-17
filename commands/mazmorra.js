@@ -70,7 +70,7 @@ module.exports = {
                 .setTitle(`🗺️ ${dungeon.name} - Mazmorra Cooperativa`)
                 .setDescription(dungeon.description)
                 .addFields(
-                    { name: '👥 Jugadores', value: `${session.players.size}/${dungeon.maxPlayers}`, inline: true },
+                    { name: '👥 Jugadores', value: `${session.players.length}/${dungeon.maxPlayers}`, inline: true },
                     { name: '🎯 Dificultad', value: `Nivel ${dungeon.minLevel}+`, inline: true },
                     { name: '🏆 Recompensas', value: dungeon.rewardDescription, inline: true },
                     { name: '⏱️ Esperando', value: '60 segundos para que se unan más jugadores...', inline: false }
@@ -103,18 +103,18 @@ module.exports = {
                         return i.reply({ content: `❌ Necesitas nivel ${dungeon.minLevel}+ para esta mazmorra.`, ephemeral: true });
                     }
 
-                    if (session.players.has(i.user.id)) {
+                    if (session.players.includes(i.user.id)) {
                         return i.reply({ content: '❌ Ya estás en esta mazmorra.', ephemeral: true });
                     }
 
-                    if (session.players.size >= dungeon.maxPlayers) {
+                    if (session.players.length >= dungeon.maxPlayers) {
                         return i.reply({ content: '❌ La mazmorra está llena.', ephemeral: true });
                     }
 
-                    session.addPlayer(i.user.id, joiningPlayer, i.user.username);
+                    session.addPlayer(i.user.id);
 
                     const updatedEmbed = EmbedBuilder.from(interaction.message.embeds[0])
-                        .spliceFields(0, 1, { name: '👥 Jugadores', value: `${session.players.size}/${dungeon.maxPlayers}`, inline: true });
+                        .spliceFields(0, 1, { name: '👥 Jugadores', value: `${session.players.length}/${dungeon.maxPlayers}`, inline: true });
 
                     await interaction.editReply({ embeds: [updatedEmbed] });
                     await i.reply({ content: `✅ ${i.user.username} se ha unido a la mazmorra!`, ephemeral: false });
@@ -156,7 +156,7 @@ async function startDungeonSession(interaction, sessionId) {
         const startEmbed = new EmbedBuilder()
             .setColor('#00FF00')
             .setTitle(`⚔️ ${dungeon.name} - ¡Comenzando!`)
-            .setDescription(`${session.players.size} jugador(es) entran a la mazmorra...`);
+            .setDescription(`${session.players.length} jugador(es) entran a la mazmorra...`);
 
         await interaction.message.edit({ embeds: [startEmbed], components: [] });
     }
