@@ -1,0 +1,98 @@
+{
+  "838993525692432394": {
+    "class": "guerrero",
+    "level": 54,
+    "exp": 71414364681,
+    "expToNext": 214292818656,
+    "gold": 102370,
+    "stats": {
+      "hp": 650,
+      "atk": 9900000000121,
+      "def": 118,
+      "spd": 61,
+      "maxMana": 50,
+      "mana": 50
+    },
+    "baseStats": {
+      "hp": 650,
+      "atk": 121,
+      "def": 118,
+      "spd": 61,
+      "maxMana": 50,
+      "mana": 50
+    },
+    "inventory": [
+      {
+        "id": "pocion_vida",
+        "name": "Poción de Vida",
+        "type": "consumible",
+        "effect": "heal",
+        "value": 50,
+        "quantity": 3
+      },
+      {
+        "id": "pocion_mana",
+        "name": "Poción de Maná",
+        "type": "consumible",
+        "effect": "mana",
+        "value": 30,
+        "quantity": 2
+      },
+      {
+        "name": "Espada Legendaria",
+        "quantity": 10
+      },
+      {
+        "id": "espada_demon_slayer",
+        "name": "Espada Mata-Demonios",
+        "type": "weapon",
+        "stats": {
+          "atk": 35,
+          "spd": 10
+        },
+        "value": 2000
+      }
+    ],
+    "equipment": {
+      "weapon": null,
+      "armor": null,
+      "accessory": null
+    },
+    "abilities": [
+      {
+        "id": "golpe_poderoso",
+        "name": "Golpe Poderoso",
+        "description": "Ataque devastador (200% ATK)",
+        "manaCost": 15,
+        "damage": 2,
+        "cooldown": 0
+      },
+      {
+        "id": "escudo_hierro",
+        "name": "Escudo de Hierro",
+        "description": "Aumenta DEF 50% por 2 turnos",
+        "manaCost": 20,
+        "type": "buff",
+        "effect": {
+          "def": 1.5,
+          "duration": 2
+        }
+      },
+      {
+        "id": "furia_guerrera",
+        "name": "Furia Guerrera",
+        "description": "Ataque múltiple (3 golpes al 70% ATK)",
+        "manaCost": 25,
+        "damage": 0.7,
+        "hits": 3
+      }
+    ],
+    "completedQuests": [],
+    "currentQuest": null,
+    "wins": 0,
+    "losses": 0,
+    "events": [],
+    "reputation": 0,
+    "createdAt": 1765932458476
+  }
+}
